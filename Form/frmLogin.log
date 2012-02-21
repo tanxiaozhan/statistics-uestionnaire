@@ -1,0 +1,4 @@
+行 18: 控件 cboUser 的类 query.FCombo 不是一个已加载的控件类。
+行 38: 控件 txtPW 的类 query.FTextBox 不是一个已加载的控件类。
+行 59: 控件 cmdOK 的类 query.XPButton 不是一个已加载的控件类。
+行 84: 控件 cmdExit 的类 query.XPButton 不是一个已加载的控件类。

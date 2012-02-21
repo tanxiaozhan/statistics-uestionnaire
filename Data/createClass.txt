@@ -1,0 +1,136 @@
+
+Private Sub Command1_Click()
+    Dim rs As New ADODB.Recordset, strMD5 As String
+    Dim sql As String
+    Dim grade(6) As String
+    Dim strPass(1100) As String
+    grade(1) = "一"
+    grade(2) = "二"
+    grade(3) = "三"
+    grade(4) = "四"
+    grade(5) = "五"
+    grade(6) = "六"
+    Randomize
+    DBConnect
+    sql="select uPWD from userinfo"
+    rs.open sql,conn,1,1
+    n=0
+    do while not rs.eof
+	n=n+1
+	strPass(n)=rs("uPWD")
+	rs.movenext
+    loop
+    rs.close
+
+    For j = 1 To 100
+        temp = getPWD()
+        For k = 1 To 1000+j
+            If temp = strPass(k) Then j = j - 1
+            
+        Next
+        strPass(1000+j) = temp
+    
+    Next
+	
+        
+ 	
+    sql = "select * from hpzz"
+    rs.Open sql, Conn, 1, 1
+    n = 0
+    Do While Not rs.EOF
+        n = n + 1
+	sql="insert into userinfo(uID,uPWD,uDesc,uSchool,uClass) values('" & _
+                  rs("hID") & "','" & getMD5(strPass(1000+n) & "','" & strPass(1000+n) & "','" & rs("hSchool") & "','" & rs("hClass") & "')"
+	conn.execute sql
+        rs.MoveNext
+    Loop
+
+    MsgBox "创建密码完毕！n=" & n
+    
+    rs.Close
+    Set rs = Nothing
+    Conn.Close
+    
+    
+    
+   Exit Sub
+   
+    
+    
+    sql = "delete from userinfo"
+    Conn.Execute sql
+        
+    sql = "select * from xx"
+    rs.Open sql, Conn, 1, 1
+    Do While Not rs.EOF
+        xxdm = Trim(str(rs("co")))
+        For i = 1 To 6
+            For j = 1 To rs(i)
+                sql = "insert into userinfo(uID,uSchool,uClass) values('" & xxdm & Trim(str(i)) & "0" & Trim(str(j)) & "','" & _
+                         Trim(rs("sc")) & "','小" & grade(i) & "(" & Trim(str(j)) & ")班')"
+                Conn.Execute sql
+            Next
+        
+        Next
+        
+        rs.MoveNext
+        
+    Loop
+    rs.Close
+    
+    
+    sql = "select * from zx"
+    rs.Open sql, Conn, 1, 1
+    Do While Not rs.EOF
+        xxdm = Trim(str(rs("co")))
+        For i = 1 To 3
+            For j = 1 To rs(i)
+                If j > 9 Then
+                    temp = Trim(str(j))
+                Else
+                    temp = "0" & Trim(str(j))
+                End If
+                
+                sql = "insert into userinfo(uID,uSchool,uClass) values('" & xxdm & Trim(str(i)) & temp & "','" & _
+                        Trim(rs("sc")) & "','初" & grade(i) & "(" & Trim(str(j)) & ")班')"
+                        
+                Conn.Execute sql
+            Next
+        Next
+        
+        For i = 4 To 6
+            For j = 1 To rs(i)
+                If j > 9 Then
+                    temp = Trim(str(j))
+                Else
+                    temp = "0" & Trim(str(j))
+                End If
+                sql = "insert into userinfo(uID,uSchool,uClass) values('" & xxdm & Trim(str(i)) & temp & "','" & _
+                        Trim(rs("sc")) & "','高" & grade(i - 3) & "(" & Trim(str(j)) & ")班')"
+                        
+                Conn.Execute sql
+            Next
+        Next
+        
+        rs.MoveNext
+        
+    
+    Loop
+    
+    MsgBox "用户信息生成完毕！"
+    rs.Close
+    Set rs = Nothing
+    Conn.Close
+    
+
+End Sub
+
+Private Function getPWD() As String
+        strpwd = ""
+        For i = 1 To 6
+           strpwd = strpwd & Chr(Int(Rnd * 25 + 97))
+        Next
+        getPWD = strpwd
+
+End Function
+

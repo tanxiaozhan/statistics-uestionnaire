@@ -1,0 +1,5 @@
+行 28: 控件 txtPW 的类 query.FTextBox 不是一个已加载的控件类。
+行 49: 控件 cmdCreate 的类 query.XPButton 不是一个已加载的控件类。
+行 74: 控件 cmdExit 的类 query.XPButton 不是一个已加载的控件类。
+行 99: 控件 txtUser 的类 query.FTextBox 不是一个已加载的控件类。
+行 120: 控件 txtConform 的类 query.FTextBox 不是一个已加载的控件类。
